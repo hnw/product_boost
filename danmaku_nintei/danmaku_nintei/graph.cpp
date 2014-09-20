@@ -269,9 +269,16 @@ void graph_pause(){
 	draw_fps(620,465);//fps描画
 
 	DrawStringToHandle(170,120,"PAUSE",color[0],font[1]);
-	DrawStringToHandle(160,240,"ゲームを続ける",color[0],font[0]);
-	DrawStringToHandle(160,280,"タイトルに戻る",color[0],font[0]);
-	DrawStringToHandle(160,320,"最初から始める",color[0],font[0]);
+	//リプレイ再生中は表示名を変更
+	if(replay_flag == 1){
+		DrawStringToHandle(170,240,"再生を続ける",color[0],font[0]);
+		DrawStringToHandle(160,280,"タイトルに戻る",color[0],font[0]);
+		DrawStringToHandle(170,320,"最初から再生",color[0],font[0]);
+	}else{
+		DrawStringToHandle(160,240,"ゲームを続ける",color[0],font[0]);
+		DrawStringToHandle(160,280,"タイトルに戻る",color[0],font[0]);
+		DrawStringToHandle(160,320,"最初から始める",color[0],font[0]);
+	}
 	DrawStringToHandle(140,240+(menu_state*40),"→",color[0],font[0]);
 }
 
@@ -375,9 +382,10 @@ void graph_result(){
 	}
 
 	if(count >= 330){
-		DrawStringToHandle(155,370,"もう一度挑戦する",color[0],font[0]);
-		DrawStringToHandle(160,410,"タイトルに戻る",color[0],font[0]);
-		DrawStringToHandle(140,370+(menu_state*40),"→",color[0],font[0]);
+		DrawStringToHandle(155,350,"もう一度挑戦する",color[0],font[0]);
+		DrawStringToHandle(160,390,"タイトルに戻る",color[0],font[0]);
+		DrawStringToHandle(160,430,"リプレイの再生",color[0],font[0]);
+		DrawStringToHandle(140,350+(menu_state*40),"→",color[0],font[0]);
 
 		if(ch.grade>=100.0){
 			switch(stage){

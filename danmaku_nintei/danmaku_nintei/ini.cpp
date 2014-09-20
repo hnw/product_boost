@@ -39,6 +39,14 @@ void ini(){
 	memset(&ch,0,sizeof(ch_t));
 	memset(&enemy,0,sizeof(enemy_t));
 	memset(&bullet,0,sizeof(bullet_t)*BULLET_MAX);
+	//リプレイ再生でないならリプレイ内容を初期化
+	if(replay_flag == 0){
+		memset(&replay,0,sizeof(replay_t));
+		replay.rands = GetNowCount();
+	}
+	
+	SRand(replay.rands);//乱数設定
+
 	spell = 0;
 	spell_flag = 0;
 	spcount=0;

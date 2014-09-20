@@ -46,3 +46,11 @@ typedef struct{
 	int size_x,size_y,col_num,kaiten;
 	double range;
 }bullet_info_t;
+
+//リプレイ情報
+typedef struct{
+	int move[4][FLAME_MAX];//十字キー
+	int slow[FLAME_MAX];//低速ボタン
+	int bom[FLAME_MAX];//ボムボタン
+	int rands;//乱数初期値
+}replay_t;

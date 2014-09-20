@@ -20,4 +20,7 @@
 //’e‚ÌÅ‘å”
 #define BULLET_MAX 3000
 
+//–{•Ò‘ƒtƒŒ[ƒ€”
+#define FLAME_MAX 19800
+
 #include "struct.h"

@@ -18,6 +18,11 @@ void calc_percent(){
 		se_flag[7] = 1;
 		scount = count;
 		count = 0;
+
+		//リプレイ再生なら、演出スキップ
+		if(replay_flag == 1){
+			count = 300;
+		}
 		func_state = 4;//ゲームオーバー画面へ
 	}
 }
@@ -33,10 +38,15 @@ void calc_grade(){
 	ch.grade = (count*100)/19800;
 
 	if(ch.grade == 100){
-		if(spell_flag == 0)
+		if(spell_flag == 0){
 			spell++;
+		}
 		se_flag[6] = 1;
 		count = 0;
+		//リプレイ再生なら、演出スキップ
+		if(replay_flag == 1){
+			count = 300;
+		}
 		func_state = 3;
 	}
 }
@@ -45,20 +55,37 @@ void ch_move(){
     int i,sayu_flag=0,joge_flag=0;
     double x,y,mx,my,naname=1;
     double move_x[4]={-4.0,4.0,0,0},move_y[4]={0,0,4.0,-4.0};
-    int inputpad[4];
+    int inputpad[4],inputslow,inputbom;
     inputpad[0]=CheckStatePad(configpad.left); inputpad[1]=CheckStatePad(configpad.right);
     inputpad[2]=CheckStatePad(configpad.down); inputpad[3]=CheckStatePad(configpad.up);
+	inputslow=CheckStatePad(configpad.slow);
+	inputbom=CheckStatePad(configpad.bom);
+
+	//リプレイ再生なら、操作をリプレイから取得
+	if(replay_flag == 1){
+		for(int i = 0;i < 4;i++){
+			inputpad[i] = replay.move[i][count];
+		}
+		inputslow = replay.slow[count];
+		inputbom = replay.bom[count];
+	}else{//リプレイ再生でないなら、リプレイに記録
+		for(int i = 0;i < 4;i++){
+			replay.move[i][count] = inputpad[i];
+		}
+		replay.slow[count] = inputslow;
+		replay.bom[count] = inputbom;
+	}
 
 	//ボム処理
-	if(CheckStatePad(configpad.bom)==1 && ch.bom > 0){
+	if(inputbom==1 && ch.bom > 0){
 		ch.bcnt = 60; //ボム効果時間
 		--ch.bom;
 		se_flag[5]=1;
 	}
 
-    if(CheckStatePad(configpad.left)>0)//左キーが押されていたら
+    if(inputpad[0]>0)//左キーが押されていたら
         ch.img+=4*2;//画像を左向きに
-    else if(CheckStatePad(configpad.right)>0)//右キーが押されていたら
+    else if(inputpad[1]>0)//右キーが押されていたら
         ch.img+=4*1;//画像を右向きに
 
     for(i=0;i<2;i++)//左右分
@@ -74,7 +101,7 @@ void ch_move(){
         if(inputpad[i]>0){//i方向のキーボード、パッドどちらかの入力があれば
             x=ch.x , y=ch.y;//今の座標をとりあえずx,yに格納
             mx=move_x[i];    my=move_y[i];//移動分をmx,myに代入
-            if(CheckStatePad(configpad.slow)>0 && ch.slow_flag==0){//低速移動なら
+            if(inputslow>0 && ch.slow_flag==0){//低速移動なら
                 mx=move_x[i]/3;    my=move_y[i]/3;//移動スピードを1/3に
             }
             x+=mx/naname , y+=my/naname;//今の座標と移動分を足す

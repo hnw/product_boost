@@ -33,6 +33,7 @@ GLOBAL int shut_flag;				//動作停止用フラグ
 GLOBAL int spell_flag;				//スペル取得しているかのフラグ
 GLOBAL int sg_flag;					//スペル取得時の表示用フラグ
 GLOBAL int spell;					//スペル取得枚数
+GLOBAL int replay_flag;				//リプレイ再生かどうか
 
 //その他の変数
 GLOBAL int color[10],font[5];//色 フォント
@@ -43,3 +44,4 @@ GLOBAL enemy_t enemy;//敵情報
 GLOBAL configpad_t configpad;//コンフィグで設定したキー情報
 GLOBAL bullet_t bullet[BULLET_MAX];//弾
 GLOBAL bullet_info_t bullet_info[12];//弾情報
+GLOBAL replay_t replay;//リプレイ情報

@@ -66,6 +66,7 @@ void calc_pause(){//ポーズメニューの制御
 		case 1://タイトルへ戻る
 			menu_state = 0;
 			se_flag[3] = 1;
+			replay_flag = 0;
 			func_state = 1;
 			break;
 		case 2://リトライ
@@ -82,19 +83,26 @@ void calc_result(){
 		se_flag[3] = 1;
 
 	if(count >= 330){
-		calc_menu(2);
+		calc_menu(3);
 
 		if(CheckStatePad(configpad.shot) == 1){
 			switch(menu_state){
-			case 0:
+			case 0://リトライ
 				menu_state = 0;
 				se_flag[3]=1;
 				func_state = 9;
 				break;
-			case 1:
+			case 1://タイトル
 				menu_state = 0;
 				se_flag[3]=1;
+				replay_flag = 0;
 				func_state = 1;
+				break;
+			case 2://リプレイ
+				menu_state = 0;
+				se_flag[3]=1;
+				replay_flag = 1;
+				func_state = 9;
 				break;
 			}
 		}
