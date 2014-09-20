@@ -50,6 +50,10 @@ void ini(){
 	ch.percent=100.0;
 	ch.grade = 0;
 	ch.bom=3;
+	
+	for(int i = 0;i < 100;i++){
+		ch.percent_graph[i] = 0;
+	}
 
 	enemy.x=FX+(FMX/2);
 	enemy.y=FY+(FMY/4);

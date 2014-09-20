@@ -24,6 +24,12 @@ void calc_percent(){
 
 //合計達成度の計算
 void calc_grade(){
+	if(ch.grade==100){
+		ch.percent_graph[99] = ch.percent;
+	}else{
+		//途中経過を保存
+		ch.percent_graph[ch.grade] = int(ch.percent);
+	}
 	ch.grade = (count*100)/19800;
 
 	if(ch.grade == 100){
@@ -45,9 +51,9 @@ void ch_move(){
 
 	//ボム処理
 	if(CheckStatePad(configpad.bom)==1 && ch.bom > 0){
-		ch.bcnt = 60;
+		ch.bcnt = 60; //ボム効果時間
 		--ch.bom;
-		se_flag[0]=1;
+		se_flag[5]=1;
 	}
 
     if(CheckStatePad(configpad.left)>0)//左キーが押されていたら
@@ -78,8 +84,10 @@ void ch_move(){
         }
     }
 
-	if(ch.bcnt)
+	//無敵カウント減少
+	if(ch.bcnt){
 		ch.bcnt--;
+	}
 }
 
 void ch_main(){

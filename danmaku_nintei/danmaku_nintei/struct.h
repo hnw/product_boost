@@ -11,6 +11,7 @@ typedef struct{
 	double x,y;		//座標
 	int graze;		//グレイズ
 	double percent;	//段位ゲージ
+	int percent_graph[100];//段位ゲージ推移
 	int grade;		//合計達成度
 }ch_t;
 

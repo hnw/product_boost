@@ -67,7 +67,7 @@ void graph_bullet(){
 
 //スコアボード表示
 void graph_board_states(){
-	int i;
+//	int i;
 	int graze=ch.graze;
 	int percent=int(ch.percent);
 	int grade=ch.grade;
@@ -110,21 +110,29 @@ void graph_board_states(){
 	DrawFormatString(575,172,color[0],"％");
 
 	DrawFormatString(425,192,color[0],"BOM %d",ch.bom);
-	
-	for(i=0;i<4;i++){//グレイズ表示
-		DrawRotaGraph(550-15*i,50,1.0f,0.0f,img_num[graze%10],TRUE);
-		graze/=10;
-	}
-	
-	for(i=0;i<3;i++){ //合計達成度表示
-		DrawRotaGraph(535-15*i,80,1.0f,0.0f,img_num[grade%10],TRUE);
-		grade/=10;
-	}
 
-	for(i=0;i<3;i++){ //段位ゲージ表示
-		DrawRotaGraph(565-15*i,180,1.0f,0.0f,img_num[percent%10],TRUE);
-		percent/=10;
+	DrawFormatString(515,42,color[0],"%d",ch.graze);
+	DrawFormatString(515,72,color[0],"%d",ch.grade);
+	if(ch.percent > 30){
+		DrawFormatString(540,172,color[0],"%d",int(ch.percent));
+	}else{
+		DrawFormatString(540,172,color[2],"%d",int(ch.percent));
 	}
+	
+	//for(i=0;i<4;i++){//グレイズ表示
+	//	DrawRotaGraph(550-15*i,50,1.0f,0.0f,img_num[graze%10],TRUE);
+	//	graze/=10;
+	//}
+	//
+	//for(i=0;i<3;i++){ //合計達成度表示
+	//	DrawRotaGraph(535-15*i,80,1.0f,0.0f,img_num[grade%10],TRUE);
+	//	grade/=10;
+	//}
+
+	//for(i=0;i<3;i++){ //段位ゲージ表示
+	//	DrawRotaGraph(565-15*i,180,1.0f,0.0f,img_num[percent%10],TRUE);
+	//	percent/=10;
+	//}
 	
 	DrawStringToHandle(445,230,"弾幕",color[0],font[3]);
 	DrawStringToHandle(470,305,"段位",color[0],font[3]);
@@ -409,6 +417,17 @@ void graph_result(){
 				break;
 			}
 		}
+		//推移グラフ
+		DrawFormatStringToHandle(475,330,color[0],font[1],"Graph");
+		for(int i = 0;(i < 99)&&(ch.percent_graph[i] > 0);i++){
+			//推移保持配列から値の取り出し
+			int y1 = ch.percent_graph[i];
+			int y2 = ch.percent_graph[i+1];
+			//取り出した2点の線引き
+			DrawLine(475+i,470-y1,475+(i+1),470-y2,color[2]);
+		}
+		DrawLine(475,470,475,370,color[0]);
+		DrawLine(475,470,575,470,color[0]);
 	}
 }
 
