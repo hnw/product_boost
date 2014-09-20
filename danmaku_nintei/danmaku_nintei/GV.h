@@ -1,6 +1,6 @@
 #include "DxLib.h"
 #include "define.h"
-#include "math.h"
+#include <math.h>
 
 #ifdef GLOBAL_INSTANCE
 #define GLOBAL
