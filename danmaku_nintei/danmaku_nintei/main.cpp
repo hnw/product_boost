@@ -1,6 +1,112 @@
 #define GLOBAL_INSTANCE 
 #include "GV.h"
 
+
+namespace
+{
+
+//初回のみ入る処理
+void initialize(void)
+{
+	load(); //データロード
+	first_ini(); //初回の初期化
+	func_state = 1;
+}
+
+//タイトル＆モードセレクト
+void mode_select(void)
+{
+	graph_title();
+	calc_title();
+}
+
+//ポーズ画面
+void pause(void)
+{
+	calc_pause();
+	graph_pause();
+}
+
+//リザルト画面
+void result(void)
+{
+	calc_result();
+	graph_result();
+	++count;
+}
+
+//ゲームオーバー画面
+void game_over(void)
+{
+	calc_result();
+	graph_result();
+	++count;
+}
+
+//キーコンフィグ
+void key_config(void)
+{
+	calc_key();
+	graph_key();
+}
+
+//マニュアル
+void manual(void)
+{
+	calc_manual();
+	graph_manual();
+}
+
+//難易度の選択
+void difficult_select(void)
+{
+	graph_difficult();
+	calc_difficult();
+}
+
+//自機タイプの選択
+void self_type_select(void)
+{
+	graph_type();
+	calc_type();
+}
+
+//各種データの初期化
+void data_clear(void)
+{
+	ini();
+	func_state=10;
+}
+
+//通常処理
+void main_sequence(void)
+{
+	calc_main();
+	ch_main();
+	enemy_main();
+	shot_main();
+	out_main();
+	graph_main();
+	++count;
+}
+
+typedef void (*sequence)(void);
+sequence sequences[] = {
+  initialize,
+  mode_select,
+  pause,
+  result,
+  game_over,
+  key_config,
+  manual,
+  difficult_select,
+  self_type_select,
+  data_clear,
+  main_sequence
+};
+
+} // namespace
+
 //ループで必ず行う３大処理
 int ProcessLoop(){
 	if(ProcessMessage()!=0)return -1;//プロセス処理がエラーなら-1を返す
@@ -17,62 +123,11 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,i
 
 	while(ProcessLoop()==0){//メインループ
 		music_ini();
-		switch(func_state){
-			case 0://初回のみ入る処理
-				load();		//データロード
-				first_ini();//初回の初期化
-				func_state=1;
-				break;
-			case 1://タイトル＆モードセレクト
-				graph_title();
-				calc_title();
-				break;
-			case 2://ポーズ画面
-				calc_pause();
-				graph_pause();
-				break;
-			case 3://リザルト画面
-				calc_result();
-				graph_result();
-				count++;
-				break;
-			case 4://ゲームオーバー画面
-				calc_result();
-				graph_result();
-				count++;
-				break;
-			case 5://キーコンフィグ
-				calc_key();
-				graph_key();
-				break;
-			case 6://マニュアル
-				calc_manual();
-				graph_manual();
-				break;
-			case 7://難易度の選択
-				graph_difficult();
-				calc_difficult();
-				break;
-			case 8://自機タイプの選択
-				graph_type();
-				calc_type();
-				break;
-			case 9://各種データの初期化
-				ini();
-				func_state=10;
-				break;
-			case 10://通常処理
-				calc_main();
-				ch_main();
-				enemy_main();
-				shot_main();
-				out_main();
-				graph_main();
-				count++;
-				break;
-			default:
-				printfDx("不明なfunc_state\n");
-				break;
+		if ((func_state >= 0) && (func_state < sizeof(sequences)/sizeof(sequences[0]))) {
+			sequences[func_state]();
+		} else {
+			printfDx("不明なfunc_state[%d]\n",
+               func_state);
 		}
 		music_play();
 		fps_wait();
