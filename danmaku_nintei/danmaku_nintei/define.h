@@ -1,3 +1,5 @@
+// see: http://msdn.microsoft.com/ja-jp/library/4hwaceh6.aspx
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 //‰~Žü—¦
