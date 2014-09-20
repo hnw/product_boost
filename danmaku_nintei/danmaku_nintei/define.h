@@ -1,6 +1,8 @@
+#include <math.h>
+
 //円周率
-#define PI 3.1415926535898
-#define PI2 (PI*2)
+#define PI M_PI
+#define PI2 (M_PI*2)
 //フィールドの広さ
 #define FMX 384
 #define FMY 448
