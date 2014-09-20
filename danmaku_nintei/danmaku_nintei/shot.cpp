@@ -25,6 +25,9 @@ double rang(double ang){
 //‹ó‚¢‚Ä‚¢‚é’e‚ð’T‚·
 int shot_search(){
 	int i;
+	if(ch.bcnt){
+		return -1;
+	}
 	for(i=0;i<BULLET_MAX;i++){
 		if(bullet[i].flag==0){
 			return i;

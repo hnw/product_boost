@@ -17,6 +17,7 @@ GLOBAL int img_board[5];	//ボードにつかう画像
 GLOBAL int img_bullet[12][10];//弾用画像
 GLOBAL int img_etc[5];//その他の画像
 GLOBAL int img_num[10];//数字の画像
+GLOBAL int img_bom;	//ボム画像ハンドラ
 
 //音楽ファイル用変数宣言部
 GLOBAL int sound_se[SE_MAX];

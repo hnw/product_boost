@@ -24,6 +24,7 @@ void load(){
 	LoadDivGraph( "./data/image/chara/0.png" , 12 , 4 , 3 , 73 , 73 , img_ch ) ;
 	LoadDivGraph( "./data/image/enemy/0.png" , 9 , 3 , 3 , 32 , 32 , img_enemy ) ;
 	LoadDivGraph( "./data/image/num/0.png" , 10 , 10 , 1 , 16 , 18 , img_num ) ;
+	img_bom = LoadGraph( "./data/image/bom/bom.png") ;
 	sound_se[0]=LoadSoundMem("./data/se/enemy_shot.wav");	//敵ショット音
 	sound_se[1]=LoadSoundMem("./data/se/hit.wav");			//被弾音(通常)
 	sound_se[2]=LoadSoundMem("./data/se/graze.wav");		//グレイズ音

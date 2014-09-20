@@ -37,22 +37,24 @@ int out_judge_enemyshot(int n){
 	if(bullet[n].cnt>0){//ƒVƒ‡ƒbƒg‚Ì‹O“¹‚ª‚P“x‚Å‚àŒvZ‚³‚ê‚Ä‚¢‚½‚ç
 		int knd = (bullet[n].state==5) ? 0 : bullet[n].knd;	//¼‹\”»’è
 
-		if(type == 0){
-			if(out_judge(
-				bullet[n].x,bullet[n].y,ch.x,ch.y,
-				bullet_info[knd].range,CRANGE-1.0,
-				bullet[n].spd,bullet[n].angle
-				)){
-					return 1;
+		if(ch.bcnt){
+			if(type == 0){
+				if(out_judge(
+					bullet[n].x,bullet[n].y,ch.x,ch.y,
+					bullet_info[knd].range,CRANGE-1.0,
+					bullet[n].spd,bullet[n].angle
+					)){
+						return 1;
+				}
 			}
-		}
-		else{
-			if(out_judge(
-				bullet[n].x,bullet[n].y,ch.x,ch.y,
-				bullet_info[knd].range,CRANGE,
-				bullet[n].spd,bullet[n].angle
-				)){
-					return 1;
+			else{
+				if(out_judge(
+					bullet[n].x,bullet[n].y,ch.x,ch.y,
+					bullet_info[knd].range,CRANGE,
+					bullet[n].spd,bullet[n].angle
+					)){
+						return 1;
+				}
 			}
 		}
 	}
@@ -138,7 +140,7 @@ void enemyshot_and_ch(){
 
 //“G‚Æ©‹@‚Æ‚Ìˆ—
 void enemy_and_ch(){
-	if(ch.flag==1){
+	if(ch.flag==1 && ch.bcnt > 0){
 		if(enemy.flag!=0){
 			if(out_judge_enemy()==1){
 				ch.percent-=1.0;

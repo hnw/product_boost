@@ -12,17 +12,38 @@ int DrawModiGraphF( double x1, double y1, double x2, double y2, double x3, doubl
 //é©ã@ï`âÊ
 void graph_ch(){
 	if(ch.flag!=0){
-		DrawRotaGraphF(ch.x,ch.y,1.0f,0.0f,img_ch[ch.img],TRUE);
+		if(ch.bcnt > 0){
+			double rand = 2.0;
+			double ang = PI2/(ch.bcnt%6);
+			DrawRotaGraphF( ch.x+(rand*cos(ang)), ch.y+(rand*sin(ang)), 1.0f, 0.0f, img_ch[ch.img], TRUE );
+		}else{
+			DrawRotaGraphF(ch.x,ch.y,1.0f,0.0f,img_ch[ch.img],TRUE);
+		}
 		if(CheckStatePad(configpad.slow)>0 && ch.slow_flag==0){ //í·ë¨à⁄ìÆíÜÇ»ÇÁìñÇΩÇËîªíËï\é¶
 			DrawRotaGraphF( ch.x, ch.y, 1.0f, 2.0*PI*(count%120)/120, img_etc[0], TRUE );
 		}
 	}
 }
 
+//É{ÉÄï`âÊ
+void graph_bom(){
+	if(ch.bcnt > 0){
+		double rand = 2.0;
+		double ang = PI2/(ch.bcnt%6);
+		DrawRotaGraphF(ch.x+(rand*cos(ang)),ch.y+(rand*sin(ang)),1.0f,0.0f,img_bom,TRUE);
+	}
+}
+
 //ìGÇÃï`âÊ
 void graph_enemy(){
 	if(enemy.flag != 0){
-		DrawRotaGraphF( enemy.x, enemy.y, 1.0f, 0.0f, img_enemy[enemy.img], TRUE );
+		if(ch.bcnt > 0){
+			double rand = 2.0;
+			double ang = PI2/(ch.bcnt%6);
+			DrawRotaGraphF( enemy.x+(rand*cos(ang)), enemy.y+(rand*sin(ang)), 1.0f, 0.0f, img_enemy[enemy.img], TRUE );
+		}else{
+			DrawRotaGraphF( enemy.x, enemy.y, 1.0f, 0.0f, img_enemy[enemy.img], TRUE );
+		}
 	}
 }
 
@@ -38,6 +59,9 @@ void graph_bullet(){
 			DrawRotaGraphF(bullet[j].x, bullet[j].y, 1.0, disp_angle,
 				img_bullet[bullet[j].knd][bullet[j].col],TRUE);
 		}
+	}
+	if(ch.bcnt){
+		bdelete();
 	}
 }
 
@@ -84,6 +108,8 @@ void graph_board_states(){
 
 	DrawFormatString(425,172,color[0],"îFíËÉQÅ[ÉW");
 	DrawFormatString(575,172,color[0],"Åì");
+
+	DrawFormatString(425,192,color[0],"BOM %d",ch.bom);
 	
 	for(i=0;i<4;i++){//ÉOÉåÉCÉYï\é¶
 		DrawRotaGraph(550-15*i,50,1.0f,0.0f,img_num[graze%10],TRUE);
@@ -194,6 +220,7 @@ void graph_spell(){
 
 void graph_main(){
 	graph_enemy();//ìGÇÃï`âÊ
+	graph_bom();//É{ÉÄ
 	graph_ch();//é©ã@ÇÃï`âÊ
 	graph_bullet();//íeÇÃï`âÊ
 	graph_board();//É{Å[ÉhÇÃï`âÊ

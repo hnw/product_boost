@@ -2,6 +2,8 @@
 typedef struct{
 	int flag;		//フラグ
 	int cnt;		//カウンタ
+	int bom;		//ボム
+	int bcnt;		//残無敵フレーム
 	int type;		//自機タイプ
 	int img;
 	int slow;		//スローかどうか

@@ -43,6 +43,13 @@ void ch_move(){
     inputpad[0]=CheckStatePad(configpad.left); inputpad[1]=CheckStatePad(configpad.right);
     inputpad[2]=CheckStatePad(configpad.down); inputpad[3]=CheckStatePad(configpad.up);
 
+	//ボム処理
+	if(CheckStatePad(configpad.bom)==1 && ch.bom > 0){
+		ch.bcnt = 60;
+		--ch.bom;
+		se_flag[0]=1;
+	}
+
     if(CheckStatePad(configpad.left)>0)//左キーが押されていたら
         ch.img+=4*2;//画像を左向きに
     else if(CheckStatePad(configpad.right)>0)//右キーが押されていたら
@@ -70,6 +77,9 @@ void ch_move(){
             }
         }
     }
+
+	if(ch.bcnt)
+		ch.bcnt--;
 }
 
 void ch_main(){
